@@ -1,9 +1,14 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const mongoos = require('mongoos');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const PORT = 4000; 
+const todoRoutes = express.Router(); // defines the Router from Express
+// what is an Express Router? 
+// A router is an object that is used to 
+// literally route client requests to a certain endpoint 
+
 const mongodbPort = 27019; // the port that your mongodb server instance 
 // is listening in on
 
@@ -26,34 +31,9 @@ connection.once('open', function() {
     console.log("MongoDB database connection established successfully");
 })
 
-const Schema = mongoose.Schema; // schema of the database we connected to at endpoint 
-
-let Todo = new Schema({
-    todo_description: {
-        type: String
-    },
-    todo_responsible: {
-        type: String
-    },
-    todo_priority: {
-        type: String
-    },
-    todo_completed: {
-        type: Boolean
-    }
-});
-
 // A Mongoos model is a wrapper of the Mongoose Schema 
 // A Mongoose schema defines the structure of the document, default values, validators, etc., 
 // whereas a Mongoose model provides an interface to the database for creating, querying, updating, deleting records, etc.
-
-module.exports = mongoose.model('Todo', Todo); // defines that here we 
-// export Todo Model out
-
-const todoRoutes = express.Router(); // defines the Router from Express
-// what is an Express Router? 
-// A router is an object that is used to 
-// literally route client requests to a certain endpoint 
 
 app.use(cors());
 app.use(bodyParser.json()); 
